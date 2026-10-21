@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0c0814">
+  <meta name="description" content="摆布：上传照片，选中物品，自由移动与调整尺寸，并修补原位置背景。">
+  <title>摆布 · 你的画面，由你摆布。</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-header"><div class="shell nav">
+    <a class="brand" href="#top" aria-label="摆布首页"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 2L19.6 12.4L30 16L19.6 19.6L16 30L12.4 19.6L2 16L12.4 12.4L16 2Z" fill="currentColor"/><path d="M26 3V9M23 6H29" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="brand-name">摆布<small>BAIBU</small></span></a>
+    <nav aria-label="主导航"><a href="#how">魔术指南</a><a href="#faq">常见问题</a><a class="nav-cta" href="#editor">进入工作台 <span aria-hidden="true">↗</span></a></nav>
+  </div></header>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="live-dot"></span> 一点想象，一场画面魔术</div>
+        <h1>你的画面，<br><em>由你摆布。</em><span class="headline-star" aria-hidden="true">✦</span></h1>
+        <p class="hero-lead">选中，挪动，放大一点。<br>让画面里的物品，跟着你的想法走。</p>
+        <div class="hero-actions"><a class="button button-dark" href="#editor">开始我的魔术 <span>✦</span></a><button class="button button-light" id="heroDemo" type="button">先看一场示范 <span>↗</span></button></div>
+        <p class="hero-note">无需注册 · 图片不长期保存 · 单图不超过 12 MB</p>
+      </div>
+      <div class="hero-scene"><div class="orbital-ring" aria-hidden="true"></div><span class="scene-spark spark-one" aria-hidden="true">✧</span><span class="scene-spark spark-two" aria-hidden="true">✦</span><div class="hero-visual" aria-label="编辑器示例预览">
+        <div class="visual-bar"><span class="visual-dots"><i></i><i></i><i></i></span><span>THE ART OF REARRANGING</span><span>✧</span></div>
+        <div class="visual-picture" id="heroAnimation"><img class="hero-poster" src="/demo.webp?v=4" alt="客厅里的椅子、花瓶和落地灯" loading="eager"><canvas id="heroMotion" width="768" height="512" role="img" aria-label="功能演示：选中椅子、拖动位置、独立调整宽高，原位置显示补全后的背景"></canvas><button id="heroPlay" class="demo-play" type="button" aria-label="暂停功能演示" hidden><span aria-hidden="true">Ⅱ</span></button><span class="visual-tag" id="heroDemoCaption">点选 · 拖动 · 自由调整</span></div>
+        <div class="visual-bottom"><span><i class="live-dot"></i> 功能演示 · 让想法动起来</span><span class="demo-steps" aria-hidden="true"><i class="active">01 点选</i><i>02 移动</i><i>03 调整</i></span></div>
+      </div></div>
+    </section>
+    <section class="how-band" id="how"><div class="shell"><div class="section-title"><span>A LITTLE MAGIC</span><h2>三步，完成一场小魔术。</h2></div><div class="steps">
+      <article><span class="step-num">01</span><h3>上传画面</h3><p>支持 PNG、JPG 和 WebP。可以是产品图、广告图或日常照片。</p></article>
+      <article><span class="step-num">02</span><h3>选中物品</h3><p>在图上点击或框选目标；也可以输入英文名称自动寻找。</p></article>
+      <article><span class="step-num">03</span><h3>自由调整</h3><p>拖动、分别调整宽高。检查背景后导出完整 PNG。</p></article>
+    </div></div></section>
+    <section class="workspace shell" id="editor">
+      <div class="workspace-intro"><div><span class="section-kicker">YOUR MAGIC DESK</span><h2>欢迎来到你的魔术工作台。</h2><p>所有调整都在这张画布上完成。处理图片可能需要几分钟，请保持页面打开。</p></div><span class="beta-pill">✦ BETA 0.1</span></div>
+      <div class="editor-grid">
+        <section class="canvas-panel" aria-label="图片编辑区">
+          <div class="panel-head"><span><i class="live-dot"></i> 画布</span><span id="canvasInfo">尚未载入图片</span></div>
+          <div class="stage" id="dropZone"><canvas id="view" width="600" height="400" aria-label="图片编辑区"></canvas><div class="empty-state" id="emptyState"><div class="upload-glyph" aria-hidden="true">✧</div><h3>一张图片，就是魔术的开始。</h3><p>拖拽到这里，或从右侧选择图片</p><button id="emptyDemo" type="button">先用示例图试试 →</button></div></div>
+          <div class="canvas-status"><span class="status-dot"></span><p id="status" role="status">请先选择一张图片。</p></div>
+        </section>
+        <aside class="controls" aria-label="摆布工具">
+          <div class="control-title"><span>摆布工具</span><span class="control-version">THE TOOLS</span></div>
+          <div class="control-block"><div class="block-heading"><span class="block-no">01</span><h3>上传图片</h3></div><label class="file-button" for="file">选择一张图片 <span>↗</span></label><input id="file" type="file" accept="image/png,image/jpeg,image/webp"><small>也可以将图片拖入左侧画布。最大 12 MB、400 万像素。</small></div>
+          <div class="control-block"><div class="block-heading"><span class="block-no">02</span><h3>选择物品</h3></div><p class="hint">直接点选或框选，定位更准确。</p><div class="actions"><button id="selectPoint" type="button" disabled>＋ 点选物品</button><button id="selectBox" type="button" disabled>▧ 框选物品</button></div><label class="sub-label" for="prompt">或输入英文名称自动查找</label><div class="prompt-row"><input id="prompt" type="text" maxlength="120" placeholder="例如 a coffee cup"><button id="process" type="button" disabled>识别</button></div></div>
+          <div class="control-block"><div class="block-heading"><span class="block-no">03</span><h3>调整尺寸</h3></div><label for="width">物品宽度</label><div class="slider-row"><input id="width" type="range" min="35" max="180" value="100" disabled><output id="widthValue">100%</output></div><label for="height">物品高度</label><div class="slider-row"><input id="height" type="range" min="35" max="180" value="100" disabled><output id="heightValue">100%</output></div><details><summary>侧面厚度模拟 <span>⌄</span></summary><label for="depth">可见侧边厚度</label><div class="slider-row"><input id="depth" type="range" min="20" max="350" value="100" disabled><output id="depthValue">100%</output></div><label for="side">侧边位置</label><select id="side" disabled><option value="right">右侧</option><option value="left">左侧</option></select><small>适合盒状物品；这不是三维重建。</small></details></div>
+          <details class="repair-tools" id="repairTools"><summary>原位置还有阴影？修补背景 <span>⌄</span></summary><p class="hint">涂抹残影及周围一小圈，再应用修补。涂抹时物品会暂时隐藏。</p><label for="brushSize">画笔大小</label><div class="slider-row"><input id="brushSize" type="range" min="8" max="120" value="36"><output id="brushSizeValue">36 px</output></div><div class="actions"><button id="startRepair" type="button" disabled>涂抹残影</button><button id="applyRepair" type="button" disabled>应用修补</button></div><div class="actions"><button id="clearRepair" type="button" disabled>清除涂抹</button><button id="cancelRepair" type="button" disabled>取消</button></div></details>
+          <div class="export-block"><button id="save" class="button button-dark" type="button" disabled>导出 PNG <span>↗</span></button><button id="reset" type="button" disabled>恢复物品尺寸</button></div>
+        </aside>
+      </div>
+    </section>
+    <section class="faq-band" id="faq"><div class="shell faq-grid"><div><span class="section-kicker">BEHIND THE MAGIC</span><h2>魔术的背后，<br>也有真实的边界。</h2></div><div class="faq-list">
+      <article><h3>被物品遮住的背景能完全还原吗？</h3><p>无法从单张照片读出被挡住的真实内容。系统会依据周围画面估计；文字、人物和规则线条可能需要手动修补。</p></article>
+      <article><h3>调整宽高会改变真实的三维形状吗？</h3><p>目前是二维画面编辑。宽高可以分别改变；侧面厚度是视觉模拟，不会重建真实三维模型。</p></article>
+      <article><h3>上传的图片会保存吗？</h3><p>当前版本在请求过程中处理图片，不建立用户图片库，也不长期保存上传文件。导出图片由浏览器保存到你的设备。</p></article>
+    </div></div></section>
+  </main>
+  <footer><div class="shell footer-inner"><a class="brand" href="#top"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 2L19.6 12.4L30 16L19.6 19.6L16 30L12.4 19.6L2 16L12.4 12.4L16 2Z" fill="currentColor"/><path d="M26 3V9M23 6H29" stroke="currentColor" stroke-width="1.3"/></svg></span><span class="brand-name">摆布<small>BAIBU</small></span></a><p>你的画面，由你摆布。</p><span>摆布 · 公开试用版</span></div></footer>
+  <script src="/editor.js"></script>
+  <script src="/assets/hero-demo.js" defer></script>
+</body>
+</html>
