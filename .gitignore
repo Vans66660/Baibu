@@ -1,0 +1,21 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+# Downloaded models, uploads and runtime files
+models/
+uploads/
+*.pt
+*.pth
+*.safetensors
+*.log
+# OS/editor
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      PUBLIC_MODE: "true"
+      HOURLY_LIMIT: "${HOURLY_LIMIT:-12}"
+    volumes:
+      - model-cache:/models
+    expose:
+      - "8000"
+    mem_limit: 12g
+
+  web:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      DOMAIN: "${DOMAIN:?Set DOMAIN in .env}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  model-cache:
+  caddy-data:
+  caddy-config:

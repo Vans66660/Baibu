@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    environment:
+      PUBLIC_MODE: "false"
+    ports:
+      - "127.0.0.1:8001:8000"
+    volumes:
+      - model-cache:/models
+    mem_limit: 12g
+
+volumes:
+  model-cache:
