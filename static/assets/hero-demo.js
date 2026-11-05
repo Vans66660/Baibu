@@ -7,12 +7,12 @@
   if (!surface || !frame || !control) return;
   const ctx = surface.getContext('2d');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const phaseLabels = ['01 点选椅子', '02 拖动位置 · 原处背景已补全', '03 独立调整宽高'];
+  const phaseLabels = ['01 选中椅子', '02 拖动位置 · 原处背景已补全', '03 独立调整宽高'];
   const steps = [...document.querySelectorAll('.demo-steps i')];
   const ease = v => { v = Math.max(0, Math.min(1, v)); return v * v * (3 - 2 * v); };
   const mix = (a, b, progress) => a + (b - a) * ease(progress);
   const image = url => new Promise((resolve, reject) => {
-    const img = new Image(); img.onload = () => resolve(img); img.onerror = reject; img.src = url;
+    const img = new Image(); img.fetchPriority = 'low'; img.decoding = 'async'; img.onload = () => resolve(img); img.onerror = reject; img.src = url;
   });
   let running = !reducedMotion.matches;
   let visible = true;
@@ -21,6 +21,7 @@
   let last = null;
   let render = null;
   let phase = -1;
+  let previewStarted = false;
 
   function syncControl() {
     control.setAttribute('aria-label', running ? '暂停功能演示' : '播放功能演示');
@@ -56,16 +57,26 @@
   });
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
+    if (visible && !previewStarted) {
+      previewStarted = true;
+      setTimeout(() => {
+        if (!visible) { previewStarted = false; return; }
+        if ('requestIdleCallback' in window) window.requestIdleCallback(loadPreview, {timeout: 2000});
+        else loadPreview();
+      }, 350);
+    }
     if (visible) schedule(); else pause();
   }, {threshold: 0.05}).observe(frame);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) pause(); else schedule();
   });
 
+  function loadPreview() {
+  if (!visible) { previewStarted = false; return; }
   Promise.all([
     image('/assets/hero-background.webp'),
     image('/assets/hero-chair.webp'),
-    fetch('/assets/hero-scene.json').then(response => {
+    fetch('/assets/hero-scene.json', {priority: 'low'}).then(response => {
       if (!response.ok) throw new Error('Preview unavailable');
       return response.json();
     }),
@@ -136,4 +147,5 @@
     // Keep the original static scene available if a demo asset cannot load.
     control.hidden=true;
   });
+  }
 })();

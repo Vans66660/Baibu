@@ -3,6 +3,8 @@ services:
     build: .
     restart: unless-stopped
     environment:
+      BACKGROUND_WORKER_URL: "${BACKGROUND_WORKER_URL:-}"
+      BACKGROUND_WORKER_TOKEN: "${BACKGROUND_WORKER_TOKEN:-}"
       PUBLIC_MODE: "true"
       HOURLY_LIMIT: "${HOURLY_LIMIT:-12}"
     volumes:

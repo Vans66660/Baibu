@@ -2,6 +2,8 @@ services:
   app:
     build: .
     environment:
+      BACKGROUND_WORKER_URL: "${BACKGROUND_WORKER_URL:-}"
+      BACKGROUND_WORKER_TOKEN: "${BACKGROUND_WORKER_TOKEN:-}"
       PUBLIC_MODE: "false"
     ports:
       - "127.0.0.1:8001:8000"

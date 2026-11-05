@@ -1,0 +1,20 @@
+# Merge with compose.yaml on a Linux NVIDIA GPU server.
+services:
+  app:
+    environment:
+      BACKGROUND_WORKER_URL: http://background-worker:8010
+      BACKGROUND_WORKER_TOKEN: "${BACKGROUND_WORKER_TOKEN:?Set a random secret of at least 24 characters}"
+  background-worker:
+    build: ./gpu-worker
+    restart: unless-stopped
+    gpus: all
+    environment:
+      BACKGROUND_WORKER_TOKEN: "${BACKGROUND_WORKER_TOKEN:?Set a random secret of at least 24 characters}"
+      BACKGROUND_MODEL_ID: diffusers/stable-diffusion-xl-1.0-inpainting-0.1
+    volumes:
+      - background-model-cache:/models
+    expose:
+      - "8010"
+    shm_size: 1g
+volumes:
+  background-model-cache:
